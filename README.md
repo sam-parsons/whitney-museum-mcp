@@ -1,98 +1,88 @@
-# 🚀 MCP Server Template
+## MCP Server for Whiteney Museum API
 
-[![CI](https://github.com/sam-parsons/mcp-server-template/actions/workflows/ci.yml/badge.svg)](https://github.com/sam-parsons/mcp-server-template/actions/workflows/ci.yml)
-[![Docker Hub](https://img.shields.io/docker/pulls/samparsons269/mcp-server-template.svg)](https://hub.docker.com/r/samparsons269/mcp-server-template)
-[![Docker Image Size](https://img.shields.io/docker/image-size/samparsons269/mcp-server-template/latest)](https://hub.docker.com/r/samparsons269/mcp-server-template)
+[![CI](https://github.com/sam-parsons/whitney-museum-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/sam-parsons/whitney-museum-mcp/actions/workflows/ci.yml)
+[![Docker Hub](https://img.shields.io/docker/pulls/samparsons269/whitney-museum-mcp.svg)](https://hub.docker.com/r/samparsons269/whitney-museum-mcp)
+[![Docker Image Size](https://img.shields.io/docker/image-size/samparsons269/whitney-museum-mcp/latest)](https://hub.docker.com/r/samparsons269/whitney-museum-mcp)
 
-A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server template that provides a clean, well-structured foundation for building custom MCP servers with FastMCP.
+Minimal [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server that exposes a few read-only tools backed by the Whitney Museum public API.
 
-## 🎯 Overview
+Focus is on core functionality and a clean starting point; additional endpoints and features can be added incrementally.
 
-This template serves as a starting point for developers who want to create their own MCP servers. It includes a complete project structure with example tools, testing setup, and deployment configurations, making it easy to get started with MCP development.
+### References
+- API landing and docs: [Whitney API](https://whitney.org/api/), [Whitney API docs](https://whitney.org/about/website/api)
+- Open data (CSV) repository: [Open Access GitHub](https://github.com/whitneymuseum/open-access)
 
-## ✨ Features
+## Tools
 
-### 🏗️ Project Structure
-- **Clean Architecture**: Well-organized module structure for easy expansion
-- **Example Tools**: Sample MCP tools demonstrating best practices
-- **Testing Setup**: Complete test infrastructure with pytest
-- **Docker Support**: Ready-to-use containerization
-- **Development Tools**: Pre-configured linting and formatting
+Registered MCP tools (minimal set):
+- `artists_list` — List artists from the public API
+- `artist_get(artist_id)` — Get a single artist by ID
+- `artworks_list` — List artworks from the public API
+- `artwork_get(artwork_id)` — Get a single artwork by ID
 
-### 🔧 MCP Tools
+These tools are thin wrappers around `GET https://whitney.org/api/*` and return parsed JSON.
 
-The template includes example tools that demonstrate how to create and register MCP tools:
+## Install
 
-#### Example Tools
-- `get_weather` - Get current weather for a location
-- `calculate_math` - Perform mathematical calculations
-- `get_time` - Get current time in various formats
-- `search_web` - Search the web for information
-
-For the full list and detailed descriptions, see `/tools/` or `/docs` when the server is running.
-
-### 🌐 HTTP Endpoints
-
-The following HTTP endpoints are available:
-- `/` - Redirects to `/docs`
-- `/docs` - Interactive API documentation and tool listing
-- `/health/` - Health check endpoint
-- `/mcp/info` - MCP server information
-- `/tools/` - List of all available MCP tools
-- `/mcp/` (POST) - MCP protocol endpoint for MCP-compatible clients
-
-## 📦 Installation
-
-### Local Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/sam-parsons/mcp-server-template.git
-cd mcp-server-template
-```
-
-2. Create and activate a virtual environment:
+Requirements: Python 3.12+
 
 ```bash
 uv venv
 source .venv/bin/activate
-```
-
-3. Install dependencies:
-
-```bash
 uv pip install -e .
 ```
 
-### Docker Installation
-
-1. Clone the repository:
+Alternatively:
 ```bash
-git clone https://github.com/sam-parsons/mcp-server-template.git
-cd mcp-server-template
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
 ```
 
-2. Build the Docker image:
+## Run
+
+HTTP transport (easy to inspect):
 ```bash
-docker build -t mcp-server-template .
+python main.py --http --port 8000
 ```
 
-3. Run the container (default timezone is UTC, uses Python 3.12):
+Then open:
+- `http://localhost:8000/docs` — simple info page
+- `http://localhost:8000/tools` — lists registered tools
+
+Stdio transport (for MCP-aware clients):
 ```bash
-docker run -p 8000:8000 mcp-server-template
+python main.py
 ```
 
-## 🧪 Testing
+## Usage examples
 
-Run tests with a simple command:
+List tools (HTTP):
+```bash
+curl http://localhost:8000/tools | jq
+```
+
+Call tools via MCP clients (e.g., Cursor) by configuring this server as an MCP provider and invoking tools by name:
+- `artists_list`
+- `artist_get` with parameter `artist_id`
+- `artworks_list`
+- `artwork_get` with parameter `artwork_id`
+
+Note: The `/mcp` HTTP endpoint implements the MCP protocol; use through MCP-compatible clients.
+
+## Development
+
+Run tests:
 ```bash
 pytest
 ```
 
-## 🤝 Contributing
+Code lives in:
+- `src/client.py` — minimal HTTP client (urllib)
+- `src/tools.py` — tool wrappers
+- `src/mcp_tools.py` — registration with FastMCP
+- `main.py` — server startup (stdio or HTTP)
 
-Contributions are welcome! Please feel free to submit issues or pull requests.
-
-## 📄 License
+## License
 
 This project is open source. Please check the license file for details.
