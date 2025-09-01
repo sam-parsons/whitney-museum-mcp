@@ -1,28 +1,34 @@
 """
-Generic client module for the MCP server template.
-This module can be extended to include any external API clients or services needed.
+Minimal external API client scaffold for the MCP server template.
+Hardcodes the base URL to the public API and keeps implementation tiny.
 """
 
-# Example client class - customize as needed
-class GenericClient:
-    """Generic client for external services"""
-    
-    def __init__(self, api_key: str = None, base_url: str = None):
-        self.api_key = api_key
-        self.base_url = base_url or "https://api.example.com"
-    
-    def make_request(self, endpoint: str, params: dict = None) -> dict:
-        """Make a generic API request"""
-        # This is a placeholder - implement actual API calls as needed
+from typing import Any, Dict, Optional
+
+
+class ApiClient:
+    """Very small client with a fixed base URL."""
+
+    def __init__(self, base_url: str = "https://whitney.org/api/") -> None:
+        self.base_url: str = base_url.rstrip("/")
+
+    def build_url(self, endpoint: str) -> str:
+        endpoint_clean = endpoint.lstrip("/")
+        return f"{self.base_url}/{endpoint_clean}"
+
+    def make_request(self, endpoint: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """Placeholder. Replace with real HTTP logic later."""
+        url = self.build_url(endpoint)
         return {
             "success": True,
-            "endpoint": endpoint,
+            "url": url,
             "params": params or {},
-            "note": "This is a placeholder implementation. Replace with actual API logic."
+            "note": "Placeholder implementation. Add real HTTP calls later.",
         }
 
+
 # Create a default client instance
-client = GenericClient()
+client = ApiClient()
 
 # Export the client
-__all__ = ['GenericClient', 'client']
+__all__ = ["ApiClient", "client"]
