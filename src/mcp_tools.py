@@ -12,6 +12,8 @@ from .tools import (
     get_exhibition,
     list_events,
     get_event,
+    list_guides,
+    get_guide,
 )
 
 
@@ -57,3 +59,13 @@ def setup_mcp_tools(mcp):
     def event_get(event_id: str) -> dict:
         """Get a single event by ID."""
         return get_event(event_id)
+
+    @mcp.tool()
+    def guides_list() -> dict:
+        """List guides from the public API."""
+        return list_guides()
+
+    @mcp.tool()
+    def guide_get(guide_id: str) -> dict:
+        """Get a single guide by ID."""
+        return get_guide(guide_id)

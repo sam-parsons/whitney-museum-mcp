@@ -6,7 +6,7 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.client import ApiClient, client
-from src.tools import list_artists, get_artist, list_artworks, get_artwork, list_exhibitions, get_exhibition, list_events, get_event
+from src.tools import list_artists, get_artist, list_artworks, get_artwork, list_exhibitions, get_exhibition, list_events, get_event, list_guides, get_guide
 
 
 class TestClient:
@@ -114,6 +114,28 @@ class TestTools:
         assert result["success"] is True
         assert seen["endpoint"] == "/events/ev7"
 
+    def test_list_guides_calls_client(self, monkeypatch):
+        seen = {}
+        def fake_get(endpoint, params=None, headers=None, timeout_seconds=None):
+            seen["endpoint"] = endpoint
+            return {"success": True, "data": []}
+        monkeypatch.setattr(client, "get", fake_get)
+
+        result = list_guides()
+        assert result["success"] is True
+        assert seen["endpoint"] == "/guides"
+
+    def test_get_guide_calls_client(self, monkeypatch):
+        seen = {}
+        def fake_get(endpoint, params=None, headers=None, timeout_seconds=None):
+            seen["endpoint"] = endpoint
+            return {"success": True, "data": {"id": "g1"}}
+        monkeypatch.setattr(client, "get", fake_get)
+
+        result = get_guide("g1")
+        assert result["success"] is True
+        assert seen["endpoint"] == "/guides/g1"
+
 
 class TestMCPRegistration:
     
@@ -128,7 +150,7 @@ class TestMCPRegistration:
         mock_mcp.tool = Mock(side_effect=tool_decorator_factory)
 
         setup_mcp_tools(mock_mcp)
-        # Expect 8 registrations: artists(2), artworks(2), exhibitions(2), events(2)
-        assert mock_mcp.tool.call_count == 8
+        # Expect 10 registrations: artists(2), artworks(2), exhibitions(2), events(2), guides(2)
+        assert mock_mcp.tool.call_count == 10
 
 

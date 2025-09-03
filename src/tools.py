@@ -44,3 +44,13 @@ def list_events() -> Dict[str, Any]:
 def get_event(event_id: str) -> Dict[str, Any]:
     """Get a single event by ID from the public API (minimal wrapper)."""
     return client.get(f"/events/{event_id}")
+
+
+def list_guides() -> Dict[str, Any]:
+    """List guides from the public API (minimal wrapper)."""
+    return client.get("/guides")
+
+
+def get_guide(guide_id: str) -> Dict[str, Any]:
+    """Get a single guide by ID from the public API (minimal wrapper)."""
+    return client.get(f"/guides/{guide_id}")

@@ -21,6 +21,8 @@ Registered MCP tools (current set):
 - `exhibition_get(exhibition_id)` — Get a single exhibition by ID
 - `events_list` — List events from the public API
 - `event_get(event_id)` — Get a single event by ID
+- `guides_list` — List guides from the public API
+- `guide_get(guide_id)` — Get a single guide by ID
 
 
 ## Install
