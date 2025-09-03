@@ -54,4 +54,4 @@ pytest
 
 ## License
 
-This project is open source. Please check the license file for details.
+MIT License. See [LICENSE](./LICENSE) for details.
