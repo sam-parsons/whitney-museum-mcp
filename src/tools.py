@@ -54,3 +54,13 @@ def list_guides() -> Dict[str, Any]:
 def get_guide(guide_id: str) -> Dict[str, Any]:
     """Get a single guide by ID from the public API (minimal wrapper)."""
     return client.get(f"/guides/{guide_id}")
+
+
+def list_pages() -> Dict[str, Any]:
+    """List pages from the public API (minimal wrapper)."""
+    return client.get("/pages")
+
+
+def get_page(page_id: str) -> Dict[str, Any]:
+    """Get a single page by ID from the public API (minimal wrapper)."""
+    return client.get(f"/pages/{page_id}")

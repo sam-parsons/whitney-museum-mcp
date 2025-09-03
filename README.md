@@ -23,6 +23,8 @@ Registered MCP tools (current set):
 - `event_get(event_id)` — Get a single event by ID
 - `guides_list` — List guides from the public API
 - `guide_get(guide_id)` — Get a single guide by ID
+- `pages_list` — List pages from the public API
+- `page_get(page_id)` — Get a single page by ID
 
 
 ## Install

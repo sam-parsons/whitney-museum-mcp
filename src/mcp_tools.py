@@ -14,6 +14,8 @@ from .tools import (
     get_event,
     list_guides,
     get_guide,
+    list_pages,
+    get_page,
 )
 
 
@@ -69,3 +71,13 @@ def setup_mcp_tools(mcp):
     def guide_get(guide_id: str) -> dict:
         """Get a single guide by ID."""
         return get_guide(guide_id)
+
+    @mcp.tool()
+    def pages_list() -> dict:
+        """List pages from the public API."""
+        return list_pages()
+
+    @mcp.tool()
+    def page_get(page_id: str) -> dict:
+        """Get a single page by ID."""
+        return get_page(page_id)
