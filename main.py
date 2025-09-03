@@ -14,7 +14,7 @@ from src import setup_mcp_tools
 warnings.filterwarnings("ignore", category=DeprecationWarning, module="websockets")
 warnings.filterwarnings("ignore", category=DeprecationWarning, module="uvicorn.protocols.websockets")
 
-mcp = FastMCP("MCP Server Template")
+mcp = FastMCP("Whitney Museum MCP")
 
 # Register the example tool
 setup_mcp_tools(mcp)
@@ -34,11 +34,11 @@ async def mcp_info(request):
         {
             "status": "running",
             "protocol": "mcp",
-            "server_name": "MCP Server Template",
-            "description": "Template for building custom Model Context Protocol servers",
+            "server_name": "Whitney Museum MCP",
+            "description": "MCP server exposing Whitney Museum public API tools",
             "mcp_endpoint": "/mcp",
             "tools_available": len(tools_list),
-            "note": "This is an MCP server template. Customize the tools in src/tools.py",
+            "note": "Wrappers around https://whitney.org/api/ endpoints.",
         }
     )
 
@@ -63,7 +63,7 @@ async def docs(request):
     <!DOCTYPE html>
     <html>
     <head>
-        <title>MCP Server Template Documentation</title>
+        <title>Whitney Museum MCP Documentation</title>
         <style>
             body {{ font-family: Arial, sans-serif; margin: 40px; }}
             .endpoint {{ margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }}
@@ -74,8 +74,8 @@ async def docs(request):
         </style>
     </head>
     <body>
-        <h1>MCP Server Template Documentation</h1>
-        <p>Template for building custom Model Context Protocol servers.</p>
+        <h1>Whitney Museum MCP</h1>
+        <p>MCP server exposing Whitney Museum public API tools.</p>
 
         <h2>Available Endpoints</h2>
         <div class="endpoint"><span class="method">GET</span> <span class="path">/health</span><p>Health check</p></div>
@@ -92,7 +92,7 @@ async def docs(request):
     docs_html += """
         </div>
         <h2>Usage</h2>
-        <p>This server implements the Model Context Protocol (MCP). Customize the tools in src/tools.py to build your own MCP server.</p>
+        <p>This server implements the Model Context Protocol (MCP) and provides wrappers around Whitney API endpoints.</p>
         
         <h2>Getting Started</h2>
         <p>1. Edit src/tools.py to add your own tools</p>
@@ -105,7 +105,7 @@ async def docs(request):
     return HTMLResponse(content=docs_html)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="MCP Server Template")
+    parser = argparse.ArgumentParser(description="Whitney Museum MCP")
     parser.add_argument("--http", action="store_true", help="Run server with HTTP transport (default: stdio)")
     parser.add_argument("--port", "-p", type=int, default=8000, help="Port to run the server on (env PORT overrides)")
     args = parser.parse_args()

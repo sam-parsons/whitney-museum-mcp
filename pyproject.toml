@@ -3,9 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "mcp-server-template"
+name = "whitney-museum-mcp"
 version = "0.1.0"
-description = "MCP Server Template - Model Context Protocol server scaffold for building custom MCP servers"
+description = "Whitney Museum MCP - Minimal MCP server exposing Whitney public API tools"
 requires-python = ">=3.10"
 dependencies = [
     "fastmcp>=2.10.6",
@@ -55,7 +55,11 @@ select = [
 ignore = []
 
 [tool.ruff.lint.isort]
-known-first-party = ["mcp_server_template"]
+known-first-party = ["src"]
+
+[project.urls]
+Homepage = "https://github.com/sam-parsons/whitney-museum-mcp"
+Repository = "https://github.com/sam-parsons/whitney-museum-mcp"
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]
