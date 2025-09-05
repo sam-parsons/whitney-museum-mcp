@@ -10,6 +10,79 @@ Minimal [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server 
 - API landing and docs: [Whitney API](https://whitney.org/api/), [Whitney API docs](https://whitney.org/about/website/api)
 - Open data (CSV) repository: [Open Access GitHub](https://github.com/whitneymuseum/open-access)
 
+## Use with Cursor and Claude (MCP)
+
+This server supports both stdio and HTTP (Server‑Sent Events) transports. For Cursor and Claude Desktop, the simplest setup is HTTP via `url`.
+
+### Quick start (local HTTP)
+
+1) Run the server locally over HTTP:
+
+```bash
+python main.py --http --port 8000
+```
+
+2) Verify it’s up:
+
+```bash
+open http://localhost:8000/health
+```
+
+3) Add to your MCP config as an `url` server.
+
+** location is not guaranteed **
+- Cursor (macOS): `~/.cursor/mcp.json`
+- Claude Desktop (macOS): `~/Library/Application Support/Claude/mcp.json`
+
+Example entry:
+
+```json
+{
+  "mcpServers": {
+    "whitney-api": {
+      "url": "http://localhost:8000/mcp"
+    }
+  }
+}
+```
+
+Restart Cursor/Claude and you should see the `whitney-api` server with the tools listed below.
+
+### Remote (Railway or any HTTPS host)
+
+If you deploy this server (Dockerfile included) and get a public URL, point your MCP client at `https://<your-domain>/mcp`:
+
+```json
+{
+  "mcpServers": {
+    "whitney-api": {
+      "url": "https://whitney-museum-mcp-production.up.railway.app/mcp"
+    }
+  }
+}
+```
+
+### Optional: stdio transport
+
+You can also run via stdio if you prefer a command‑based server:
+
+```bash
+python main.py
+```
+
+MCP config example:
+
+```json
+{
+  "mcpServers": {
+    "whitney-api-stdio": {
+      "command": "python",
+      "args": ["main.py"]
+    }
+  }
+}
+```
+
 ## Tools
 
 Registered MCP tools (current set):
@@ -44,6 +117,63 @@ source .venv/bin/activate
 pip install -e .
 ```
 
+
+## Run
+
+### Docker (HTTP transport)
+
+Use the published image or build locally. The container serves HTTP on port 8000.
+
+Using Docker Hub image:
+
+```bash
+docker pull samparsons269/whitney-museum-mcp:latest
+docker run --rm -p 8000:8000 samparsons269/whitney-museum-mcp:latest
+```
+
+Build locally:
+
+```bash
+docker build -t whitney-museum-mcp .
+docker run --rm -p 8000:8000 whitney-museum-mcp
+```
+
+Verify:
+
+```bash
+curl -s http://localhost:8000/health
+open http://localhost:8000/docs
+```
+
+### Local Python
+
+HTTP (recommended for Cursor/Claude via `url`):
+
+```bash
+python main.py --http --port 8000
+```
+
+Stdio (for `command/args` config):
+
+```bash
+python main.py
+```
+
+### Deploy on Railway
+
+This repo is Docker-ready. Create a new Railway service from this repo or Docker image. Ensure port `8000` is exposed, and Railway will set `PORT`; the image already reads it.
+
+Once deployed, configure Cursor/Claude with your service URL:
+
+```json
+{
+  "mcpServers": {
+    "whitney-api": {
+      "url": "https://<your-railway-subdomain>.up.railway.app/mcp"
+    }
+  }
+}
+```
 
 ## Development
 
