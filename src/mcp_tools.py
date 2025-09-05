@@ -22,62 +22,56 @@ from .tools import (
 def setup_mcp_tools(mcp):
     """Setup MCP tools for the server"""
     
-    @mcp.tool()
+    @mcp.tool(description="List artists.")
     def artists_list() -> dict:
-        """List artists from the public API."""
+        """List artists."""
         return list_artists()
 
-    @mcp.tool()
+    @mcp.tool(description="Get a single artist by ID.")
     def artist_get(artist_id: str) -> dict:
-        """Get a single artist by ID."""
         return get_artist(artist_id)
 
-    @mcp.tool()
+    @mcp.tool(description="List artworks.")
     def artworks_list() -> dict:
-        """List artworks from the public API."""
+        """List artworks."""
         return list_artworks()
 
-    @mcp.tool()
+    @mcp.tool(description="Get a single artwork by ID.")
     def artwork_get(artwork_id: str) -> dict:
-        """Get a single artwork by ID."""
         return get_artwork(artwork_id)
 
-    @mcp.tool()
+    @mcp.tool(description="List exhibitions.")
     def exhibitions_list() -> dict:
-        """List exhibitions from the public API."""
+        """List exhibitions."""
         return list_exhibitions()
 
-    @mcp.tool()
+    @mcp.tool(description="Get a single exhibition by ID.")
     def exhibition_get(exhibition_id: str) -> dict:
-        """Get a single exhibition by ID."""
         return get_exhibition(exhibition_id)
 
-    @mcp.tool()
+    @mcp.tool(description="List events.")
     def events_list() -> dict:
-        """List events from the public API."""
+        """List events."""
         return list_events()
 
-    @mcp.tool()
+    @mcp.tool(description="Get a single event by ID.")
     def event_get(event_id: str) -> dict:
-        """Get a single event by ID."""
         return get_event(event_id)
 
-    @mcp.tool()
+    @mcp.tool(description="List guides.")
     def guides_list() -> dict:
-        """List guides from the public API."""
+        """List guides."""
         return list_guides()
 
-    @mcp.tool()
+    @mcp.tool(description="Get a single guide by ID.")
     def guide_get(guide_id: str) -> dict:
-        """Get a single guide by ID."""
         return get_guide(guide_id)
 
-    @mcp.tool()
+    @mcp.tool(description="List pages.")
     def pages_list() -> dict:
-        """List pages from the public API."""
+        """List pages."""
         return list_pages()
 
-    @mcp.tool()
+    @mcp.tool(description="Get a single page by ID.")
     def page_get(page_id: str) -> dict:
-        """Get a single page by ID."""
         return get_page(page_id)

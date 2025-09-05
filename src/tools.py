@@ -13,6 +13,8 @@ def list_artists() -> Dict[str, Any]:
 
 def get_artist(artist_id: str) -> Dict[str, Any]:
     """Get a single artist by ID from the public API (minimal wrapper)."""
+    if not str(artist_id).strip():
+        raise ValueError("artist_id must be a non-empty string")
     return client.get(f"/artists/{artist_id}")
 
 
@@ -23,6 +25,8 @@ def list_artworks() -> Dict[str, Any]:
 
 def get_artwork(artwork_id: str) -> Dict[str, Any]:
     """Get a single artwork by ID from the public API (minimal wrapper)."""
+    if not str(artwork_id).strip():
+        raise ValueError("artwork_id must be a non-empty string")
     return client.get(f"/artworks/{artwork_id}")
 
 
@@ -33,6 +37,8 @@ def list_exhibitions() -> Dict[str, Any]:
 
 def get_exhibition(exhibition_id: str) -> Dict[str, Any]:
     """Get a single exhibition by ID from the public API (minimal wrapper)."""
+    if not str(exhibition_id).strip():
+        raise ValueError("exhibition_id must be a non-empty string")
     return client.get(f"/exhibitions/{exhibition_id}")
 
 
@@ -43,6 +49,8 @@ def list_events() -> Dict[str, Any]:
 
 def get_event(event_id: str) -> Dict[str, Any]:
     """Get a single event by ID from the public API (minimal wrapper)."""
+    if not str(event_id).strip():
+        raise ValueError("event_id must be a non-empty string")
     return client.get(f"/events/{event_id}")
 
 
@@ -53,6 +61,8 @@ def list_guides() -> Dict[str, Any]:
 
 def get_guide(guide_id: str) -> Dict[str, Any]:
     """Get a single guide by ID from the public API (minimal wrapper)."""
+    if not str(guide_id).strip():
+        raise ValueError("guide_id must be a non-empty string")
     return client.get(f"/guides/{guide_id}")
 
 
@@ -63,4 +73,6 @@ def list_pages() -> Dict[str, Any]:
 
 def get_page(page_id: str) -> Dict[str, Any]:
     """Get a single page by ID from the public API (minimal wrapper)."""
+    if not str(page_id).strip():
+        raise ValueError("page_id must be a non-empty string")
     return client.get(f"/pages/{page_id}")

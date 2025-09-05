@@ -48,6 +48,10 @@ class TestTools:
         assert result["success"] is True
         assert captured["endpoint"] == "/artists/123"
 
+    def test_get_artist_empty_raises(self):
+        with pytest.raises(ValueError):
+            get_artist("")
+
     def test_list_artworks_calls_client(self, monkeypatch):
         seen = {}
         def fake_get(endpoint, params=None, headers=None, timeout_seconds=None):
@@ -69,6 +73,10 @@ class TestTools:
         result = get_artwork("9")
         assert result["success"] is True
         assert seen["endpoint"] == "/artworks/9"
+
+    def test_get_artwork_empty_raises(self):
+        with pytest.raises(ValueError):
+            get_artwork("")
 
     def test_list_exhibitions_calls_client(self, monkeypatch):
         seen = {}
@@ -92,6 +100,10 @@ class TestTools:
         assert result["success"] is True
         assert seen["endpoint"] == "/exhibitions/e1"
 
+    def test_get_exhibition_empty_raises(self):
+        with pytest.raises(ValueError):
+            get_exhibition("")
+
     def test_list_events_calls_client(self, monkeypatch):
         seen = {}
         def fake_get(endpoint, params=None, headers=None, timeout_seconds=None):
@@ -113,6 +125,10 @@ class TestTools:
         result = get_event("ev7")
         assert result["success"] is True
         assert seen["endpoint"] == "/events/ev7"
+
+    def test_get_event_empty_raises(self):
+        with pytest.raises(ValueError):
+            get_event("")
 
     def test_list_guides_calls_client(self, monkeypatch):
         seen = {}
@@ -136,6 +152,10 @@ class TestTools:
         assert result["success"] is True
         assert seen["endpoint"] == "/guides/g1"
 
+    def test_get_guide_empty_raises(self):
+        with pytest.raises(ValueError):
+            get_guide("")
+
     def test_list_pages_calls_client(self, monkeypatch):
         seen = {}
         def fake_get(endpoint, params=None, headers=None, timeout_seconds=None):
@@ -157,6 +177,10 @@ class TestTools:
         result = get_page("p1")
         assert result["success"] is True
         assert seen["endpoint"] == "/pages/p1"
+
+    def test_get_page_empty_raises(self):
+        with pytest.raises(ValueError):
+            get_page("")
 
 
 class TestMCPRegistration:
